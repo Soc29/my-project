@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h2 class="my-4 text-center">{{ post_data.title }}</h2>
+    <p class="text-center">{{ post_data.category }}</p>
+    <p class="text-center">{{ post_data.date}} by {{ post_data.author }}</p>
+    {% if post_data.image %}
+        <img src="{{ post_data.image.url }}" style="max-width: 700px" class="mx-auto d-block">
+    {% endif %}
+        <p class="mt-5 text-center">{{ post_data.content|linebreaksbr }}</p>
+    {% if user.is_authenticated and request.user.id == post_data.author.id %}
+        <div class="d-flex mb-5 float-right">
+            <a href="{% url 'edit' post_data.id %}" class="btn btn-outline-success">編集</a>
+            <a href="{% url 'delete' post_data.id %}" class="btn btn-outline-danger ml-3">削除</a>
+        </div>
+    {% endif %}
+{% endblock %}

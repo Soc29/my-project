@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block content %}
+        <div class="row my-4">
+            <div class="col-9">
+                {% if keyword %}
+                    <h4 class="mb-4">[{{ keyword }} の検索結果]</h4>
+                {% endif %}
+                {% for post in post_data %}
+                <div class="card mb-3 mt-3" style="max-width: 700px">
+                    <div class="row no-gutters">
+                        <div class="col-md-4 my-auto">
+                            {% if post.image %}
+                            <img class="card-img" src="{{ post.image.url }}">
+                            {% else %}
+                            <p class="text-center"> No Image </p> 
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.title }}<span class="small">- {{ post.category}}</span></h5>
+                                <p class="card-text">{{ post.content|linebreaksbr }}</p>
+                                <a class="btn btn-primary" href="{% url 'detail' post.id %}">詳細</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                {{ post.date }} by {{ post.author }}
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-3 mb-5 mt-5">
+                <div class="card my-4">
+                    <h5 class="card-header">検索</h5>
+                    <div class="card-body">
+                        <form method="get" action="{% url 'search' %}" class="input-group">
+                            <input type="text" class="form-control" name="keyword" placeholder="検索欄">
+                            <button class="btn btn-warning ml-2" type="submit">検索</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <h5 class="card-header">goodランキング★</h5>
+                    <div class="card-body">
+                        <p class="mb-0">
+                            ランキング掲載予定
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card my-4">
+                    <h5 class="card-header">カテゴリ</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            {% for category in category_data %}
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a class="category" href="{% url 'category' category %}">
+                                            {{ category.name }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+        
+    
+{% endblock %}
+

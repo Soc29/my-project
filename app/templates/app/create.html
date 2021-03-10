@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends 'app/base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="my-4">
+    <h2>投稿</h2>
+</div>
+
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="formpost">
+        {% render_field form.title class="form-control" placeholder="タイトルを入力"%}
+    </div>
+    <div class="formpost">
+        {% render_field form.category class="form-control" placeholder="カテゴリを入力" %}
+    </div>
+    <div class="formpost mt-3 mb-3">
+        <p>※画像は任意。選択する場合は .jpeg , .jpg か .png でないと表示できません。</p>
+        {{ form.image }}
+    </div>
+    <div class="formpost">
+        {% render_field form.content class="form-control" placeholder="本文を入力(使用方法やそれを通じての効果を記載)"%}
+    </div>
+    <button type="submit" class="btn btn-outline-success mt-5 mx-auto d-block">投稿する</button>
+</form>
+
+{% endblock %}
